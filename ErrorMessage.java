@@ -1,0 +1,11 @@
+public enum ErrorMessage {
+
+NO_ERROR,
+
+EMPTY_STRUCTURE,
+
+INDEX_OUT_OF_BOUNDS,
+
+INVALID_ARGUMENT;
+
+}

@@ -1,6 +1,11 @@
 public class ReturnObjectImpl implements ReturnObject{
 
 
+/**
+* an implementation of ReturnObject. May contain either an error or an object
+*/
+
+
 private ErrorMessage error;
 private Object obj;
 
@@ -27,7 +32,7 @@ private Object obj;
 
 			switch (error) {
 				case NO_ERROR:
-				System.out.println("mis-direction check line");
+				System.out.println("check line");
 				break;
 				case EMPTY_STRUCTURE:
 				System.out.println("ERROR- EMPTY STRUCTURE");
@@ -52,7 +57,6 @@ private Object obj;
 	public Object getReturnValue() {
 		if (!hasError()) {
 			Object item = obj.toString();
-			//System.out.println(" " + item);
 			return item;
 		} else {
 			return null;

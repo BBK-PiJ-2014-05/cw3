@@ -1,27 +1,25 @@
 public class FunctionalArrayList extends ArrayList implements FunctionalList {
 
-private Object[] fListArray;
-private ReturnObject obj;
-private FunctionalList fList;
-private int fListSize;
 
-public FunctionalArrayList() {
-	fListArray = new Object[INITIAL_SIZE];
-	size = 0;
-}
-
+FunctionalList fList;
 
 
 public ReturnObject head() {
-	return obj = get(0);
+
+	return get(0);
 }
+
+/**
+* gets all elements in the list except the head element
+*/
 
 public FunctionalList rest(){
 	fList = new FunctionalArrayList();
-	Object[] restList = new Object[size];
-	for (int i =0; i < size; i++) {
-		restList[i] = fListArray[i];
-		System.out.print("" + restList[i]);
+	for (int i = 0; i < size - 1; i++) {
+		fList.add(listArray[ 1+ i]);
+		System.out.print("item at position "  + i + ": ");
+		fList.get(i);
+
 	}
 	return fList;
 }

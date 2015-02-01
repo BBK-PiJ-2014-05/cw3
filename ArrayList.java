@@ -1,113 +1,163 @@
 public class ArrayList implements List {
 
-	private Object[] listArray;
-	private static int INITIAL_SIZE = 5;
-	private int size;
-	private ReturnObjectImpl obj;
-/**
-* 	constructs a new ArrayList of the INITIAL_SIZE (5)
-*/
+protected Object[] listArray;
+protected int size;
+protected static int INITIAL_SIZE = 5;
+private ReturnObject obj;
 
 	public ArrayList() {
-		listArray = new ArrayList[INITIAL_SIZE];
+		listArray = new Object[INITIAL_SIZE];
 		size = 0;
 	}
 
-/**
-*	checks if the ArrayList is empty
-*	@Return true or false
-*/
 	public boolean isEmpty() {
-		if (listArray == null) {
+		if(size == 0) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-/**
-*	return the size of the array
-*	@Return int size
-*/
 
 	public int size() {
 		return size;
 	}
-
 /**
-*
+* returns the object at the specified position
 */
 
 	public ReturnObject get(int index) {
-		if (index > size) {
-			return obj = new ReturnObjectImpl(ErrorMessage.OUT_OF_BOUNDS);
+		if (isEmpty()) {
+			obj = new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE);
+			obj.getError();
+			return obj;
+		} else if (index < 0 || index >= size) {
+			obj = new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
+			obj.getError();
+			return obj;
 		} else {
-			return obj = new ReturnObjectImpl(listArray[index]);
-
+			obj = new ReturnObjectImpl(listArray[index]);
+			System.out.println("" + obj.getReturnValue());
+			return obj;
 		}
-
-	}
-
-	public ReturnObject remove(int index) {
-		return obj = new ReturnObjectImpl(listArray[index]);
-
-	}
-
-	public ReturnObject add(int index, Object item) {
-		if (index > size || index < 0 ) {
-		return obj = new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
-
-		}
-		if (item == null) {
-		return obj = new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT);
-		} else if (isAlmostFull()) {
-				reserveMoreMemory();
-			} else {
-				Object[] tempArray = new ArrayList[size-index];
-				for (int i = 0; i < size-index; i++) {
-						tempArray[i] = listArray[i+index];
-					}
-					obj = new ReturnObjectImpl(item);
-					size++;
-					listArray[index] = obj;
-						for (int i = 0; i < size-index; i++) {
-							listArray[index + 1 + i] = tempArray[i];
-						}
-					}
-
+/**
+* adds an item to the end of the list
+*/
 
 	}
 
 	public ReturnObject add(Object item) {
+		if (item == null) {
+			obj = new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT);
+			obj.getError();
+			return obj;
+		}
 		if (isAlmostFull()) {
 			reserveMoreMemory();
 		}
+		listArray[size] = item;
+		size++;
+		obj = new ReturnObjectImpl(item);
+		obj.getReturnValue();
+		return obj;
+
+	}
+/**
+* adds an object to a specified position in the list
+*
+*/
+
+	public ReturnObject add(int index, Object item) {
+		if (index < 0 || index > size) {
+			obj = new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
+			obj.getError();
+			return obj;
+		}
 		if (item == null) {
 			obj = new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT);
-		} else {
-			listArray[size] = new ReturnObjectImpl(item);
-			size++;
+			obj.getError();
+			return obj;
 		}
+
+		if (isAlmostFull()) {
+			reserveMoreMemory();
+		}
+
+		if (index == size) {
+			add(item);
+			return null;
+		}
+
+		for (int i = 0; i < size - index; i++) {
+			listArray[size - i] = listArray[size - 1 - i];
+			}
+
+			listArray[index] = item;
+			size++;
+			obj = new ReturnObjectImpl(item);
+			obj.getReturnValue();
+		return obj;
+
 	}
 
 
 
+/**
+* removes an item; if the item to be removed is the last item in the list then the correspinding list reference becomes null.
+*/
 
+	public ReturnObject remove(int index) {
+		if (isEmpty()) {
+			obj = new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE);
+			obj.getError();
+			return obj;
+		} else if (index < 0 || index >= size) {
+			obj = new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS);
+			obj.getError();
+			return obj;
+		} else {
+			size--;
+			if (index == size) {
+				listArray[index] = null;
+			} else {
+
+				for (int i = 0; i < size - index; i++) {
+					listArray[index + i] = listArray[index + i + 1];
+				}
+			}
+			obj = new ReturnObjectImpl(listArray[index]);
+
+			return obj;
+		}
+	}
+
+/**
+* checks if there is a space in the array
+*/
 
 	private boolean isAlmostFull() {
-		if (listArray.length - size < 1) {
-			reserveMoreMemory();
+		if(listArray.length - size < 1) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+/**
+* makes a new array twice the size of the current one
+*/
 
 	private void reserveMoreMemory() {
-		Object[] biggerArray = new ArrayList[size * 2];
-		for (int i = 0; i < listArray.length; i++) {
-			biggerArray[i] = this.listArray[i];
+		Object[] biggerArray = new Object[size * 2];
+			for (int i = 0; i < listArray.length; i++) {
+				biggerArray[i] = listArray[i];
+			}
+			listArray = biggerArray;
 		}
-		this.listArray = biggerArray;
-	}
+
+
+
+
+
+
 
 }
+

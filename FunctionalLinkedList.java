@@ -8,6 +8,9 @@ public ReturnObject head() {
 
 }
 
+/**
+* implementation of functionalList using a linkedList
+*/
 
 public FunctionalList rest() {
 	ListNode currentNode = head;
