@@ -45,13 +45,15 @@ public void ListTest(List test) {
 public void FunctionTest(FunctionalList test) {
 
 	ListFunctions(test);
-	System.out.print(" head is ");
+	System.out.print("The head is: ");
 	test.head();
+	System.out.print("and the rest of the list is: ");
 	test.rest();
 
 }
 
 public void SampleTest (SampleableList test) {
+	System.out.print("Testing SampleableList...");
 	ListFunctions(test);
 	test.sample();
 }
